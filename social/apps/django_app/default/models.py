@@ -19,7 +19,8 @@ USER_MODEL = getattr(settings, setting_name('USER_MODEL'), None) or \
              getattr(settings, 'AUTH_USER_MODEL', None) or \
              'auth.User'
 PRIVATE_PORTAL_MODEL = getattr(
-    settings, setting_name('PRIVATE_PORTAL_MODEL'), None)
+    settings, setting_name('PRIVATE_PORTAL_MODEL'), None) or \
+    'properties.Property'
 UID_LENGTH = getattr(settings, setting_name('UID_LENGTH'), 255)
 NONCE_SERVER_URL_LENGTH = getattr(
     settings, setting_name('NONCE_SERVER_URL_LENGTH'), 255)
