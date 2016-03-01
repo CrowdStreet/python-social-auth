@@ -55,6 +55,7 @@ class DjangoUserMixin(UserMixin):
     @classmethod
     def create_user(cls, *args, **kwargs):
         username_field = cls.username_field()
+        import ipdb; ipdb.set_trace()
         if 'username' in kwargs and username_field not in kwargs:
             kwargs[username_field] = kwargs.pop('username')
         return cls.user_model().objects.create_user(*args, **kwargs)
@@ -75,28 +76,30 @@ class DjangoUserMixin(UserMixin):
         return user_model.objects.filter(**{email_field + '__iexact': email})
 
     @classmethod
-    def get_social_auth(cls, provider, uid):
+    def get_social_auth(cls, provider, uid, private_portal=None):
         if not isinstance(uid, six.string_types):
             uid = str(uid)
         try:
-            return cls.objects.get(provider=provider, uid=uid)
+            return cls.objects.get(
+                provider=provider, uid=uid, private_portal=private_portal)
         except cls.DoesNotExist:
             return None
 
     @classmethod
-    def get_social_auth_for_user(cls, user, provider=None, id=None):
+    def get_social_auth_for_user(cls, user, private_portal=None, provider=None, id=None):
         qs = user.social_auth.all()
         if provider:
-            qs = qs.filter(provider=provider)
+            qs = qs.filter(provider=provider, private_portal=private_portal)
         if id:
             qs = qs.filter(id=id)
         return qs
 
     @classmethod
-    def create_social_auth(cls, user, uid, provider):
+    def create_social_auth(cls, user, uid, private_portal, provider):
         if not isinstance(uid, six.string_types):
             uid = str(uid)
-        return cls.objects.create(user=user, uid=uid, provider=provider)
+        return cls.objects.create(
+            user=user, uid=uid, private_portal=private_portal, provider=provider)
 
 
 class DjangoNonceMixin(NonceMixin):

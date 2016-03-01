@@ -16,8 +16,11 @@ def auth_allowed(backend, details, response, *args, **kwargs):
 
 
 def social_user(backend, uid, user=None, *args, **kwargs):
+    import ipdb; ipdb.set_trace()
+    private_portal = kwargs['strategy'].request_private_portal()
     provider = backend.name
-    social = backend.strategy.storage.user.get_social_auth(provider, uid)
+    social = backend.strategy.storage.user.get_social_auth(
+        provider, uid, private_portal=private_portal)
     if social:
         if user and social.user != user:
             msg = 'This {0} account is already in use.'.format(provider)
@@ -26,15 +29,19 @@ def social_user(backend, uid, user=None, *args, **kwargs):
             user = social.user
     return {'social': social,
             'user': user,
+            'private_portal': private_portal,
             'is_new': user is None,
             'new_association': False}
 
 
 def associate_user(backend, uid, user=None, social=None, *args, **kwargs):
+
+    import ipdb; ipdb.set_trace()
+    private_portal = kwargs['strategy'].request_private_portal()
     if user and not social:
         try:
             social = backend.strategy.storage.user.create_social_auth(
-                user, uid, backend.name
+                user, uid, private_portal, backend.name
             )
         except Exception as err:
             if not backend.strategy.storage.is_integrity_error(err):
@@ -42,14 +49,16 @@ def associate_user(backend, uid, user=None, social=None, *args, **kwargs):
             # Protect for possible race condition, those bastard with FTL
             # clicking capabilities, check issue #131:
             #   https://github.com/omab/django-social-auth/issues/131
-            return social_user(backend, uid, user, *args, **kwargs)
+            return social_user(backend, uid, user, private_portal, *args, **kwargs)
         else:
             return {'social': social,
                     'user': social.user,
+                    'private_portal': private_portal,
                     'new_association': True}
 
 
-def associate_by_email(backend, details, user=None, *args, **kwargs):
+def associate_by_email(backend, details, user=None,
+                       private_portal=None, *args, **kwargs):
     """
     Associate current auth with a user with the same email address in the DB.
 
@@ -59,6 +68,8 @@ def associate_by_email(backend, details, user=None, *args, **kwargs):
     email address on some provider.  This pipeline entry is disabled by
     default.
     """
+    import ipdb; ipdb.set_trace()
+    private_portal = kwargs['strategy'].request_private_portal()
     if user:
         return None
 
@@ -67,7 +78,8 @@ def associate_by_email(backend, details, user=None, *args, **kwargs):
         # Try to associate accounts registered with the same email address,
         # only if it's a single object. AuthException is raised if multiple
         # objects are returned.
-        users = list(backend.strategy.storage.user.get_users_by_email(email))
+        users = list(backend.strategy.storage.user.get_users_by_email(
+            email, private_portal=private_portal))
         if len(users) == 0:
             return None
         elif len(users) > 1:
@@ -79,9 +91,11 @@ def associate_by_email(backend, details, user=None, *args, **kwargs):
             return {'user': users[0]}
 
 
-def load_extra_data(backend, details, response, uid, user, *args, **kwargs):
+def load_extra_data(backend, details, response, uid, user,
+                    private_portal=None, *args, **kwargs):
+    import ipdb; ipdb.set_trace()
     social = kwargs.get('social') or \
-             backend.strategy.storage.user.get_social_auth(backend.name, uid)
+             backend.strategy.storage.user.get_social_auth(backend.name, uid, private_portal)
     if social:
         extra_data = backend.extra_data(user, uid, response, details,
                                         *args, **kwargs)
