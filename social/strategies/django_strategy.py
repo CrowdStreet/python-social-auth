@@ -76,6 +76,10 @@ class DjangoStrategy(BaseStrategy):
     def redirect(self, url):
         return redirect(url)
 
+    def request_private_portal(self):
+        """path of the current private_portal"""
+        return self.request.private_portal
+
     def html(self, content):
         return HttpResponse(content, content_type='text/html;charset=UTF-8')
 
