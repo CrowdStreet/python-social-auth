@@ -18,6 +18,8 @@ from social.apps.django_app.default.managers import UserSocialAuthManager
 USER_MODEL = getattr(settings, setting_name('USER_MODEL'), None) or \
              getattr(settings, 'AUTH_USER_MODEL', None) or \
              'auth.User'
+PRIVATE_PORTAL_MODEL = getattr(
+    settings, setting_name('PRIVATE_PORTAL_MODEL'), None)
 UID_LENGTH = getattr(settings, setting_name('UID_LENGTH'), 255)
 NONCE_SERVER_URL_LENGTH = getattr(
     settings, setting_name('NONCE_SERVER_URL_LENGTH'), 255)
@@ -31,6 +33,7 @@ class AbstractUserSocialAuth(models.Model, DjangoUserMixin):
     """Abstract Social Auth association model"""
     user = models.ForeignKey(USER_MODEL, related_name='social_auth')
     provider = models.CharField(max_length=32)
+    private_portal = models.ForeignKey(PRIVATE_PORTAL_MODEL)
     uid = models.CharField(max_length=UID_LENGTH)
     extra_data = JSONField()
     objects = UserSocialAuthManager()
@@ -69,7 +72,7 @@ class UserSocialAuth(AbstractUserSocialAuth):
 
     class Meta:
         """Meta data"""
-        unique_together = ('provider', 'uid')
+        unique_together = ('provider', 'uid', 'private_portal')
         db_table = 'social_auth_usersocialauth'
 
 
