@@ -16,7 +16,6 @@ def auth_allowed(backend, details, response, *args, **kwargs):
 
 
 def social_user(backend, uid, user=None, *args, **kwargs):
-    import ipdb; ipdb.set_trace()
     private_portal = kwargs['strategy'].request_private_portal()
     provider = backend.name
     social = backend.strategy.storage.user.get_social_auth(
@@ -35,8 +34,6 @@ def social_user(backend, uid, user=None, *args, **kwargs):
 
 
 def associate_user(backend, uid, user=None, social=None, *args, **kwargs):
-
-    import ipdb; ipdb.set_trace()
     private_portal = kwargs['strategy'].request_private_portal()
     if user and not social:
         try:
@@ -68,7 +65,6 @@ def associate_by_email(backend, details, user=None,
     email address on some provider.  This pipeline entry is disabled by
     default.
     """
-    import ipdb; ipdb.set_trace()
     private_portal = kwargs['strategy'].request_private_portal()
     if user:
         return None
@@ -93,7 +89,6 @@ def associate_by_email(backend, details, user=None,
 
 def load_extra_data(backend, details, response, uid, user,
                     private_portal=None, *args, **kwargs):
-    import ipdb; ipdb.set_trace()
     social = kwargs.get('social') or \
              backend.strategy.storage.user.get_social_auth(backend.name, uid, private_portal)
     if social:
