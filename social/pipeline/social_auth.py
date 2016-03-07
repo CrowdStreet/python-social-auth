@@ -18,8 +18,7 @@ def auth_allowed(backend, details, response, *args, **kwargs):
 def social_user(backend, uid, user=None, *args, **kwargs):
     private_portal = kwargs['strategy'].request_private_portal()
     provider = backend.name
-    social = backend.strategy.storage.user.get_social_auth(
-        provider, uid, private_portal=private_portal)
+    social = backend.strategy.storage.user.get_social_auth(provider, uid,)
     if social:
         if user and social.user != user:
             msg = 'This {0} account is already in use.'.format(provider)
@@ -38,7 +37,7 @@ def associate_user(backend, uid, user=None, social=None, *args, **kwargs):
     if user and not social:
         try:
             social = backend.strategy.storage.user.create_social_auth(
-                user, uid, private_portal, backend.name
+                user, uid, backend.name
             )
         except Exception as err:
             if not backend.strategy.storage.is_integrity_error(err):
@@ -46,7 +45,7 @@ def associate_user(backend, uid, user=None, social=None, *args, **kwargs):
             # Protect for possible race condition, those bastard with FTL
             # clicking capabilities, check issue #131:
             #   https://github.com/omab/django-social-auth/issues/131
-            return social_user(backend, uid, user, private_portal, *args, **kwargs)
+            return social_user(backend, uid, user, *args, **kwargs)
         else:
             return {'social': social,
                     'user': social.user,
@@ -54,8 +53,7 @@ def associate_user(backend, uid, user=None, social=None, *args, **kwargs):
                     'new_association': True}
 
 
-def associate_by_email(backend, details, user=None,
-                       private_portal=None, *args, **kwargs):
+def associate_by_email(backend, details, user=None, *args, **kwargs):
     """
     Associate current auth with a user with the same email address in the DB.
 
@@ -65,7 +63,7 @@ def associate_by_email(backend, details, user=None,
     email address on some provider.  This pipeline entry is disabled by
     default.
     """
-    private_portal = kwargs['strategy'].request_private_portal()
+    # private_portal = kwargs['strategy'].request_private_portal()
     if user:
         return None
 
@@ -74,8 +72,7 @@ def associate_by_email(backend, details, user=None,
         # Try to associate accounts registered with the same email address,
         # only if it's a single object. AuthException is raised if multiple
         # objects are returned.
-        users = list(backend.strategy.storage.user.get_users_by_email(
-            email, private_portal=private_portal))
+        users = list(backend.strategy.storage.user.get_users_by_email(email))
         if len(users) == 0:
             return None
         elif len(users) > 1:
@@ -90,7 +87,7 @@ def associate_by_email(backend, details, user=None,
 def load_extra_data(backend, details, response, uid, user,
                     private_portal=None, *args, **kwargs):
     social = kwargs.get('social') or \
-             backend.strategy.storage.user.get_social_auth(backend.name, uid, private_portal)
+             backend.strategy.storage.user.get_social_auth(backend.name, uid, )
     if social:
         extra_data = backend.extra_data(user, uid, response, details,
                                         *args, **kwargs)
