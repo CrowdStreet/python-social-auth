@@ -9,8 +9,8 @@ from social.apps.django_app.default.models import UserSocialAuth, Nonce, \
 
 class UserSocialAuthOption(admin.ModelAdmin):
     """Social Auth user options"""
-    list_display = ('user', 'id', 'provider', 'uid', 'private_portal')
-    list_filter = ('provider', 'private_portal')
+    list_display = ('user', 'id', 'provider', 'uid', )
+    list_filter = ('provider', )
     raw_id_fields = ('user',)
     list_select_related = True
 

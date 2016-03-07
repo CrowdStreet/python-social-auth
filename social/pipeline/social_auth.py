@@ -84,8 +84,7 @@ def associate_by_email(backend, details, user=None, *args, **kwargs):
             return {'user': users[0]}
 
 
-def load_extra_data(backend, details, response, uid, user,
-                    private_portal=None, *args, **kwargs):
+def load_extra_data(backend, details, response, uid, user, *args, **kwargs):
     social = kwargs.get('social') or \
              backend.strategy.storage.user.get_social_auth(backend.name, uid, )
     if social:
