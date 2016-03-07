@@ -21,7 +21,7 @@ class IntegrityErrorUserSocialAuth(TestUserSocialAuth):
         raise IntegrityError()
 
     @classmethod
-    def get_social_auth(cls, provider, uid):
+    def get_social_auth(cls, provider, uid, private_portal=None):
         if not hasattr(cls, '_called_times'):
             cls._called_times = 0
         cls._called_times += 1
