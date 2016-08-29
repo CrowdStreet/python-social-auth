@@ -29,7 +29,7 @@ def social_user(backend, uid, user=None, *args, **kwargs):
             'user': user,
             'private_portal': private_portal,
             'is_new': user is None,
-            'new_association': False}
+            'new_association': social is None}
 
 
 def associate_user(backend, uid, user=None, social=None, *args, **kwargs):
@@ -81,7 +81,8 @@ def associate_by_email(backend, details, user=None, *args, **kwargs):
                 'The given email address is associated with another account'
             )
         else:
-            return {'user': users[0]}
+            return {'user': users[0],
+                    'is_new': False}
 
 
 def load_extra_data(backend, details, response, uid, user, *args, **kwargs):

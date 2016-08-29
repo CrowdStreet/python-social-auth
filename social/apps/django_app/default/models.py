@@ -22,6 +22,7 @@ PRIVATE_PORTAL_MODEL = getattr(
     settings, setting_name('PRIVATE_PORTAL_MODEL'), None) or \
     'properties.Property'
 UID_LENGTH = getattr(settings, setting_name('UID_LENGTH'), 255)
+EMAIL_LENGTH = getattr(settings, setting_name('EMAIL_LENGTH'), 254)
 NONCE_SERVER_URL_LENGTH = getattr(
     settings, setting_name('NONCE_SERVER_URL_LENGTH'), 255)
 ASSOCIATION_SERVER_URL_LENGTH = getattr(
@@ -99,10 +100,13 @@ class Association(models.Model, DjangoAssociationMixin):
 
     class Meta:
         db_table = 'social_auth_association'
+        unique_together = (
+            ('server_url', 'handle',)
+        )
 
 
 class Code(models.Model, DjangoCodeMixin):
-    email = models.EmailField(max_length=254)
+    email = models.EmailField(max_length=EMAIL_LENGTH)
     code = models.CharField(max_length=32, db_index=True)
     verified = models.BooleanField(default=False)
 

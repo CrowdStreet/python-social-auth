@@ -40,12 +40,13 @@ or extend current one):
     * Bitbucket_ OAuth1
     * Box_ OAuth2
     * Dailymotion_ OAuth2
+    * Deezer_ OAuth2
     * Disqus_ OAuth2
     * Douban_ OAuth1 and OAuth2
     * Dropbox_ OAuth1
     * Evernote_ OAuth1
     * Facebook_ OAuth2 and OAuth2 for Applications
-    * Fitbit_ OAuth1
+    * Fitbit_ OAuth2 and OAuth1
     * Flickr_ OAuth1
     * Foursquare_ OAuth2
     * `Google App Engine`_ Auth
@@ -61,9 +62,11 @@ or extend current one):
     * Mixcloud_ OAuth2
     * `Mozilla Persona`_
     * NaszaKlasa_ OAuth2
+    * `NGPVAN ActionID`_ OpenId
     * Odnoklassniki_ OAuth2 and Application Auth
     * OpenId_
     * Podio_ OAuth2
+    * Pinterest_ OAuth2
     * Rdio_ OAuth1 and OAuth2
     * Readability_ OAuth1
     * Shopify_ OAuth2
@@ -80,6 +83,7 @@ or extend current one):
     * Twilio_ Auth
     * Twitch_ OAuth2
     * Twitter_ OAuth1
+    * Upwork_ OAuth1
     * Vimeo_ OAuth1
     * VK.com_ OpenAPI, OAuth2 and OAuth2 for Applications
     * Weibo_ OAuth2
@@ -120,6 +124,7 @@ section.
 .. _Bitbucket: https://bitbucket.org
 .. _Box: https://www.box.com
 .. _Dailymotion: https://dailymotion.com
+.. _Deezer: https://www.deezer.com
 .. _Disqus: https://disqus.com
 .. _Douban: http://www.douban.com
 .. _Dropbox: https://dropbox.com
@@ -141,6 +146,7 @@ section.
 .. _Mixcloud: https://www.mixcloud.com
 .. _Mozilla Persona: http://www.mozilla.org/persona/
 .. _NaszaKlasa: https://developers.nk.pl/
+.. _NGPVAN ActionID: http://developers.ngpvan.com/action-id
 .. _Odnoklassniki: http://www.odnoklassniki.ru
 .. _Podio: https://podio.com
 .. _Shopify: http://shopify.com
@@ -161,6 +167,7 @@ section.
 .. _Yahoo: http://yahoo.com
 .. _Yammer: https://www.yammer.com
 .. _Yandex: https://yandex.ru
+.. _Pinterest: https://www.pinterest.com
 .. _Readability: http://www.readability.com/
 .. _Stackoverflow: http://stackoverflow.com/
 .. _Steam: http://steamcommunity.com/
@@ -173,3 +180,4 @@ section.
 .. _Webpy: https://github.com/omab/python-social-auth/tree/master/social/apps/webpy_app
 .. _Tornado: http://www.tornadoweb.org/
 .. _Authentication Pipeline: pipeline.html
+.. _Upwork: https://www.upwork.com

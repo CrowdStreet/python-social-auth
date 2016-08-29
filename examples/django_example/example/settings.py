@@ -132,6 +132,7 @@ AUTHENTICATION_BACKENDS = (
     'social.backends.coinbase.CoinbaseOAuth2',
     'social.backends.coursera.CourseraOAuth2',
     'social.backends.dailymotion.DailymotionOAuth2',
+    'social.backends.deezer.DeezerOAuth2',
     'social.backends.disqus.DisqusOAuth2',
     'social.backends.douban.DoubanOAuth2',
     'social.backends.dropbox.DropboxOAuth',
@@ -141,7 +142,7 @@ AUTHENTICATION_BACKENDS = (
     'social.backends.facebook.FacebookAppOAuth2',
     'social.backends.facebook.FacebookOAuth2',
     'social.backends.fedora.FedoraOpenId',
-    'social.backends.fitbit.FitbitOAuth',
+    'social.backends.fitbit.FitbitOAuth2',
     'social.backends.flickr.FlickrOAuth',
     'social.backends.foursquare.FoursquareOAuth2',
     'social.backends.github.GithubOAuth2',
@@ -173,6 +174,7 @@ AUTHENTICATION_BACKENDS = (
     'social.backends.readability.ReadabilityOAuth',
     'social.backends.reddit.RedditOAuth2',
     'social.backends.runkeeper.RunKeeperOAuth2',
+    'social.backends.sketchfab.SketchfabOAuth2',
     'social.backends.skyrock.SkyrockOAuth',
     'social.backends.soundcloud.SoundcloudOAuth2',
     'social.backends.spotify.SpotifyOAuth2',
@@ -202,6 +204,7 @@ AUTHENTICATION_BACKENDS = (
     'social.backends.email.EmailAuth',
     'social.backends.username.UsernameAuth',
     'django.contrib.auth.backends.ModelBackend',
+    'social.backends.upwork.UpworkOAuth',
 )
 
 AUTH_USER_MODEL = 'app.CustomUser'
